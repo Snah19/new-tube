@@ -5,10 +5,33 @@ import { VideoMenu } from "./video-menu";
 import { VideoOwner } from "./video-owner";
 import { VideoReactions } from "./video-reactions";
 import { format, formatDistanceToNow } from "date-fns";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface VideoTopRowProps {
   video: VideoGetOneOutput,
 };
+
+export const VideoTopRowSkeleton = () => {
+  return (
+    <div className="flex flex-col gap-4 mt-4">
+      <div className="flex flex-col gap-2">
+        <Skeleton className="w-4/5 md:w-2/5 h-6" />
+      </div>
+
+      <div className="flex justify-between items-center w-full">
+        <div className="flex items-center gap-3 w-[70%]">
+          <Skeleton className="shrink-0 w-10 h-10 rounded-full" />
+          <div className="flex flex-col gap-2 w-full">
+            <Skeleton className="w-4/5 md:w-2/6 h-5" />
+            <Skeleton className="w-3/5 md:w-1/5 h-5" />
+          </div>
+        </div>
+        <Skeleton className="w-2/6 md:w-1/6 h-9 rounded-full" />
+      </div>
+      <div className="w-full h-[120px]" />
+    </div>
+  );
+}
 
 export const VideoTopRow = ({ video }: VideoTopRowProps) => {
   const compactViews = useMemo(() => {

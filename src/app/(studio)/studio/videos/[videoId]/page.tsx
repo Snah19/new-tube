@@ -1,4 +1,6 @@
+import { DEFAULT_LIMIT } from "@/constants";
 import { VideoView } from "@/modules/studio/ui/views/video-view";
+
 import { HydrateClient, trpc } from "@/trpc/server";
 
 interface VideoDetailPageProps {
@@ -11,6 +13,7 @@ const VideoDetailPage = async ({ params }: VideoDetailPageProps) => {
   const { videoId } = await params;
   void trpc.studio.getOne.prefetch({ id: videoId });
   void trpc.categories.getMany.prefetch();
+  void trpc.suggestions.getMany.prefetchInfinite({ videoId, limit: DEFAULT_LIMIT });
 
   return (
     <HydrateClient>

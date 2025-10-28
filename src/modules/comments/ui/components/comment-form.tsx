@@ -12,10 +12,13 @@ import { toast } from "sonner";
 
 interface CommentFromProps {
   videoId: string;
+  parentId?: string;
   onSuccess?: () => void;
+  onCancel?: () => void;
+  variant?: "comment" | "reply",
 };
 
-export const CommentForm = ({ videoId, onSuccess }: CommentFromProps) => {
+export const CommentForm = ({ videoId, parentId, onCancel, onSuccess, variant = "comment"}: CommentFromProps) => {
   const { user } = useUser();
   const clerk = useClerk();
 
@@ -23,6 +26,7 @@ export const CommentForm = ({ videoId, onSuccess }: CommentFromProps) => {
   const create = trpc.comments.create.useMutation({
     onSuccess: () => {
       utils.comments.getMany.invalidate({ videoId });
+      utils.comments.getMany.invalidate({ videoId, parentId });
       form.reset();
       toast.success("Comment added.");
       onSuccess?.();
@@ -42,6 +46,7 @@ export const CommentForm = ({ videoId, onSuccess }: CommentFromProps) => {
   const form = useForm<CommentFormValues>({
     resolver: zodResolver(commentFormSchema),
     defaultValues: {
+      parentId,
       videoId,
       value: ""
     }
@@ -51,23 +56,27 @@ export const CommentForm = ({ videoId, onSuccess }: CommentFromProps) => {
     create.mutate(values);
   };
 
+  const handleCancel = () => {
+    form.reset();
+    onCancel?.();
+  };
+
   return (
     <Form {...form}>
       <form className="flex gap-4 group" onSubmit={form.handleSubmit(handleSubmit)}>
-        <UserAvatar size="lg" imageUrl={user?.imageUrl || "/user-placeholder.svg"} name={user?.username || "User"} />
+        <UserAvatar size="sm" imageUrl={user?.imageUrl || "/user-placeholder.svg"} name={user?.username || "User"} />
         <div className="flex-1">
           <FormField name="value" control={form.control} render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Textarea className="resize-none bg-transparent overflow-hidden min-h-0" placeholder="Add a comment..." {...field} />
+                <Textarea className="resize-none bg-transparent overflow-hidden min-h-0" placeholder={ variant === "comment" ? "Add a comment..." : "Reply to this comment..." } {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )} />
           <div className="justify-end gap-2 mt-2 flex">
-            <Button type="submit" size="sm" disabled={create.isPending} >
-              Comment
-            </Button>
+            {onCancel && ( <Button variant="ghost" onClick={handleCancel}>Cancel</Button> )}
+            <Button type="submit" size="sm" disabled={create.isPending} >{variant === "comment" ? "Comment" : "Reply"}</Button>
           </div>
         </div>
       </form>

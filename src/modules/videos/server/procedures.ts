@@ -63,6 +63,54 @@ export const videoRouter = createTRPCRouter({
 
       return existingVideo;
     }),
+  revalidate: protectedProcedure
+    .input(z.object({ id: z.uuid() }))
+    .mutation(async ({ ctx, input }) => {
+      const { id: userId } = ctx.user;
+
+      const [existingVideo] = await db
+        .select()
+        .from(videos)
+        .where(and(
+          eq(videos.id, input.id),
+          eq(videos.userId, userId)
+        ));
+
+      if (!existingVideo) throw new TRPCError({ code: "NOT_FOUND" });
+      
+      if (!existingVideo.muxUploadId) throw new TRPCError({ code: "BAD_REQUEST" });
+
+      const upload = await mux.video.uploads.retrieve(existingVideo.muxUploadId);
+
+      if (!upload || !upload.asset_id) throw new TRPCError({ code: "BAD_REQUEST" });
+
+      const asset = await mux.video.assets.retrieve(
+        upload.asset_id
+      );
+
+      if (!asset) throw new TRPCError({ code: "BAD_REQUEST" });
+
+      const duration = asset.duration ? Math.round(asset.duration * 1000) : 0;
+
+      // TODO: Potentially find a way to revalidate trackId and trackStatus as well
+
+      const [updatedVideo] = await db
+        .update(videos)
+        .set({
+          muxStatus: asset.status,
+          muxPlaybackId: asset.playback_ids?.[0].id,
+          muxAssetId: asset.id,
+          duration,
+        })
+        .where(and(
+          eq(videos.id, input.id),
+          eq(videos.userId, userId)
+        ))
+        .returning();
+
+      return updatedVideo;
+    })
+    ,
   restoreThumbnail: protectedProcedure
     .input(z.object({ id: z.uuid() }))
     .mutation(async ({ ctx, input }) => {
@@ -126,10 +174,10 @@ export const videoRouter = createTRPCRouter({
       const { id: userId } = ctx.user;
 
       if (!input.id) throw new TRPCError({ code: "BAD_REQUEST" });
-      
+
       const [updatedVideo] = await db
         .update(videos)
-        .set({ title: input.title, description: input.description, categoryId: input.categoryId, updatedAt: new Date(), visibility: "private" }) // TODO: update visibility base on user input
+        .set({ title: input.title, description: input.description, categoryId: input.categoryId, updatedAt: new Date(), visibility: input.visibility as "private" | "public" })
         .where(and( eq(videos.id, input.id), eq(videos.userId, userId) ))
         .returning();
 

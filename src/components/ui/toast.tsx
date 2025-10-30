@@ -6,9 +6,6 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { VideoSectionProps } from "@/modules/videos/ui/sections/video-section"
-import { VideoPlayer } from "@/modules/videos/ui/components/video-player"
-import { trpc } from "@/trpc/client"
 
 const ToastProvider = ToastPrimitives.Provider
 

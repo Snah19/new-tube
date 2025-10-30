@@ -84,7 +84,7 @@ export const VideoRowCard = ({ data, size = "default", onRemove }: VideoRowCardP
   const compactLikes = useMemo(() => {
     return Intl.NumberFormat("en", {
       notation: "compact",
-    }).format(data.viewCount);
+    }).format(data.likeCount);
   }, [data.likeCount]);
 
   return (

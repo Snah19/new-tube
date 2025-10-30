@@ -11,7 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
-import { Form, FormControl, FormField, FormLabel, FormMessage, FormItem } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormLabel, FormItem } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { z } from "zod";
 import { videoUpdateSchema } from "@/db/schema";
@@ -104,7 +104,7 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
   }
 
   // TODO: Change if deploying outside of VERCEL
-  const fullUrl = `${APP_URL || "http://localhost:3000"}/videos/${videoId}`;
+  const fullUrl = `${APP_URL}/videos/${videoId}`;
   const [isCopied, setIsCopied] = useState(false);
 
   const onCopy = async () => {

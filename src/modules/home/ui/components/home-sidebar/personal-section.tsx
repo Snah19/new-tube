@@ -6,6 +6,7 @@ import { useAuth } from "@clerk/clerk-react";
 import { useClerk } from "@clerk/nextjs";
 import { HistoryIcon, ListVideoIcon, ThumbsUpIcon } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 type NavItem = {
   title: string;
@@ -39,11 +40,13 @@ const navItems: NavItem[] = [
 export const PersonalSection = () => {
   const clerk = useClerk();
   const { isSignedIn } = useAuth();
+  const pathname = usePathname();
 
   const handleSignIn = (e: MouseEvent<HTMLButtonElement>, navItem: NavItem) => {
-    e.preventDefault();
-
-    if (!isSignedIn && navItem.auth) return clerk.openSignIn();
+    if (!isSignedIn && navItem.auth) {
+      e.preventDefault();
+      return clerk.openSignIn();
+    }
   };
   return (
     <SidebarGroup>
@@ -52,9 +55,7 @@ export const PersonalSection = () => {
         <SidebarMenu>
           {navItems.map(navItem => (
             <SidebarMenuItem key={navItem.title}>
-              {/* TODO: Change to look at current pathname */}
-              {/* TODO: Do something on click */}
-              <SidebarMenuButton tooltip={navItem.title} asChild isActive={false} onClick={(e) => handleSignIn(e, navItem)}>
+              <SidebarMenuButton tooltip={navItem.title} asChild isActive={pathname === navItem.url} onClick={(e) => handleSignIn(e, navItem)}>
                 <Link className="flex items-center gap-4" href={navItem.url}>
                   <navItem.icon />
                   <span className="text-sm">{navItem.title}</span>

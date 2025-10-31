@@ -30,7 +30,7 @@ export default function RootLayout({
           <TRPCProvider>
             <Toaster />
             <header>
-              <Link className="inline-flex items-center gap-x-2" href="/">
+              <Link prefetch className="inline-flex items-center gap-x-2" href="/">
                 <Image src="/icon.svg" alt="NewTube" width={50} height={50} />
                 <span className="text-xl font-semibold tracking-tight">NewTube</span>
               </Link>

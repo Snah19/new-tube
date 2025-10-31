@@ -21,7 +21,7 @@ export const StudioSidebarHeader = () => {
   if (state === "collapsed") return (
     <SidebarMenuItem>
       <SidebarMenuButton tooltip="Your profile" asChild >
-        <Link href="/users/current">
+        <Link prefetch href="/users/current">
           <UserAvatar imageUrl={user.imageUrl} name={user.firstName ?? "User"} size="xs" />
           <span className="text-sm">Your Profile</span>
         </Link>
@@ -31,7 +31,7 @@ export const StudioSidebarHeader = () => {
 
   return (
     <SidebarHeader className="flex items-center justify-center pb-4">
-      <Link href="/users/current">
+      <Link prefetch href="/users/current">
         <UserAvatar className="size-[112px] hover:opacity-80 transition-opacity" imageUrl={user?.imageUrl} name={user?.fullName ?? "User"}  />
       </Link>
       <div className="flex flex-col items-center gap-y-1 mt-2">

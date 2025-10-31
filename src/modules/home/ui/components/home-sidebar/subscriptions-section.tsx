@@ -41,7 +41,7 @@ export const SubscriptionsSection = () => {
           {!isLoading && data?.pages.flatMap(page => page.items).map(subscription => (
             <SidebarMenuItem key={`${subscription.creatorId}-${subscription.viewerId}`}>
               <SidebarMenuButton asChild tooltip={subscription.user.name} isActive={pathname === `/users/${subscription.user.id}`}>
-                <Link className="flex items-center gap-4" href={`/users/${subscription.user.id}`}>
+                <Link prefetch className="flex items-center gap-4" href={`/users/${subscription.user.id}`}>
                   <UserAvatar size="xs" imageUrl={subscription.user.imageUrl} name={subscription.user.name} />
                   <span className="text-sm">{subscription.user.name}</span>
                 </Link>
@@ -51,7 +51,7 @@ export const SubscriptionsSection = () => {
           {!isLoading && (
             <SidebarMenuItem>
               <SidebarMenuButton asChild isActive={ pathname === "/subscriptions" }>
-                <Link className="flex items-center gap-4" href="/subscriptions">
+                <Link prefetch className="flex items-center gap-4" href="/subscriptions">
                   <ListIcon className="size-4" />
                   <span className="textsm">All subscriptions</span>
                 </Link>

@@ -54,7 +54,7 @@ const SubscriptionsSectionSuspense = () => {
     <div>
       <div className="flex flex-col gap-4">
         {subscriptions.pages.flatMap(page => page.items).map(subscription => (
-          <Link href={`/users/${subscription.user.id}`} key={subscription.creatorId}>
+          <Link prefetch href={`/users/${subscription.user.id}`} key={subscription.creatorId}>
             <SubscriptionItem name={subscription.user.name} imageUrl={subscription.user.imageUrl} subscriberCount={subscription.user.subscriberCount} onUnsubscribe={() => unsubscribe.mutate({ userId: subscription.creatorId })} disabled={unsubscribe.isPending} />
           </Link>
         ))}

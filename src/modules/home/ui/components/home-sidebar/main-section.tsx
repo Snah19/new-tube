@@ -52,7 +52,7 @@ export const MainSection = () => {
           {navItems.map(navItem => (
             <SidebarMenuItem key={navItem.title}>
               <SidebarMenuButton tooltip={navItem.title} asChild isActive={pathname === navItem.url} onClick={(e) => handleSignIn(e, navItem)}>
-                <Link className="flex items-center gap-4" href={navItem.url}>
+                <Link prefetch className="flex items-center gap-4" href={navItem.url}>
                   <navItem.icon />
                   <span className="text-sm">{navItem.title}</span>
                 </Link>

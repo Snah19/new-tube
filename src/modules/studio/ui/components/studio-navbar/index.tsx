@@ -11,7 +11,7 @@ export const StudioNavbar = () => {
         {/* Menu and Logo */}
         <div className="flex-shrink-0 flex items-center gap-x-2">
           <SidebarTrigger />
-          <Link className="inline-flex items-center" href="/studio">
+          <Link prefetch className="hidden md:inline-flex items-center" href="/studio">
             <Image src="./icon.svg" alt="Logo" width={32} height={32} />
             <span className="text-xl font-semibold tracking-tight">Studio</span>
           </Link>

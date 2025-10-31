@@ -66,7 +66,7 @@ export const UserPageInfo = ({ user }: UserPageInfoProps) => {
         </div>
         {userId === user.clerkId ? (
           <Button className="w-full mt-3 rounded-full" variant="secondary" asChild>
-            <Link href="/studio">Go to studio</Link>
+            <Link prefetch href="/studio">Go to studio</Link>
           </Button>
         ) : (
           <SubscriptionButton className="w-full mt-3" disabled={isPending || !isLoaded} isSubscribed={user.viewerSubscribed} onClick={onClick} />
@@ -84,7 +84,7 @@ export const UserPageInfo = ({ user }: UserPageInfoProps) => {
           </div>
           {userId === user.clerkId ? (
             <Button className="mt-3 rounded-full" variant="secondary" asChild>
-              <Link href="/studio">Go to studio</Link>
+              <Link prefetch href="/studio">Go to studio</Link>
             </Button>
           ) : (
             <SubscriptionButton className="mt-3" disabled={isPending || !isLoaded} isSubscribed={user.viewerSubscribed} onClick={onClick} />

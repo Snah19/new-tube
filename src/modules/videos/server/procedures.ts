@@ -264,9 +264,7 @@ export const videoRouter = createTRPCRouter({
 
       if (!upload || !upload.asset_id) throw new TRPCError({ code: "BAD_REQUEST" });
 
-      const asset = await mux.video.assets.retrieve(
-        upload.asset_id
-      );
+      const asset = await mux.video.assets.retrieve(upload.asset_id);
 
       if (!asset) throw new TRPCError({ code: "BAD_REQUEST" });
 

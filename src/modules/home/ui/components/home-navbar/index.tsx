@@ -11,9 +11,9 @@ export const HomeNavbar = () => {
         {/* Menu and Logo */}
         <div className="flex-shrink-0 flex items-center gap-x-2">
           <SidebarTrigger />
-          <Link prefetch className="hidden md:inline-flex items-center" href="/">
+          <Link prefetch className="hidden md:inline-flex items-center gap-x-2" href="/">
             <Image src="./icon.svg" alt="Logo" width={32} height={32} />
-            <span className="text-xl font-semibold tracking-tight">NewTube</span>
+            <span className="text-xl font-semibold tracking-tight">YouTube</span>
           </Link>
         </div>
 

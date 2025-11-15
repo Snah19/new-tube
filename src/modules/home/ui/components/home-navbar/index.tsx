@@ -13,7 +13,7 @@ export const HomeNavbar = () => {
           <SidebarTrigger />
           <Link prefetch className="hidden md:inline-flex items-center gap-x-2" href="/">
             <Image src="./icon.svg" alt="Logo" width={32} height={32} />
-            <span className="text-xl font-semibold tracking-tight">YouTube</span>
+            <span className="text-xl font-semibold tracking-tight">YouTube <sup className="text-xs font-normal text-muted-foreground">by Snah</sup> </span>
           </Link>
         </div>
 

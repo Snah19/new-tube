@@ -8,7 +8,6 @@ export const HomeNavbar = () => {
   return (
     <nav className="z-50 fixed top-0 left-0 right-0 flex items-center h-16 pl-2 pr-5 bg-white">
       <div className="flex justify-between items-center gap-4 w-full">
-        {/* Menu and Logo */}
         <div className="flex-shrink-0 flex items-center gap-x-2">
           <SidebarTrigger />
           <Link prefetch className="hidden md:inline-flex items-center gap-x-2" href="/">
@@ -16,8 +15,6 @@ export const HomeNavbar = () => {
             <span className="text-xl font-semibold tracking-tight">YouTube <sup className="text-xs font-normal text-muted-foreground">by Snah</sup> </span>
           </Link>
         </div>
-
-        {/* Search bar */}
         <div className="flex-1 flex justify-center max-w-[720px]">
           <SearchInput />
         </div>

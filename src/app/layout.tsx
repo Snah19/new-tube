@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Link from "next/link";
-import Image from "next/image";
 import { ClerkProvider } from "@clerk/nextjs";
 import { TRPCProvider } from "@/trpc/client";
 import { Toaster } from "@/components/ui/sonner";
@@ -29,12 +27,6 @@ export default function RootLayout({
         >
           <TRPCProvider>
             <Toaster />
-            <header>
-              <Link prefetch className="inline-flex items-center gap-x-2" href="/">
-                <Image src="/icon.svg" alt="YouTube" width={50} height={50} />
-                <span className="text-xl font-semibold tracking-tight">YouTube</span>
-              </Link>
-            </header>
             {children}
           </TRPCProvider>
         </body>
